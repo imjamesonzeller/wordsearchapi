@@ -1,18 +1,19 @@
 # Word Search API
 
-This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid and the list of words inside the word search itself.
+This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid.
 
 ## Features
 
-- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations along with words that were inserted.
+- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations.
 - **POST Method**: Accepts `POST` requests containing a JSON object with a list of words.
-- **JSON Response**: Returns a JSON object representing the generated word search grid and the list of words inside the word search itself.
+- **JSON Response**: Returns a JSON object representing the generated word search grid.
 
 ## Requirements
 
 - Python 3.x
 - Flask
 - `requests` (for testing)
+- `flask_cors` (for enabling CORS)
 
 ## Installation
 
@@ -31,10 +32,10 @@ You can install the required dependencies using `pip`:
 pip install -r requirements.txt
 ```
 
-Alternatively, install Flask manually:
+Alternatively, install Flask and CORS manually:
 
 ```bash
-pip install Flask
+pip install Flask flask_cors
 ```
 
 ### 3. Run the Flask API Server
@@ -46,6 +47,61 @@ python app.py
 ```
 
 By default, the API will be available at `http://localhost:5000`. If you want to deploy it to a different IP or port, you can modify the `app.run()` call in `app.py`.
+
+## WordSearch Class
+
+The core of the word search generator is the `WordSearch` class, which takes a list of words and generates a grid that places each word randomly within the grid. 
+
+### Class: `WordSearch`
+
+#### Methods:
+
+- **`__init__(self, words)`**  
+  Initializes the `WordSearch` object with a list of words and sets up the grid. The grid size is computed based on the number of words and the length of the words. It ensures that only words of valid lengths are placed on the grid.
+
+- **`__computeGridSize(self)`**  
+  Calculates an appropriate size for the word search grid based on the number of words and their average lengths. It ensures that the grid is large enough to fit the words in a random pattern.
+
+- **`__randomCoords(self)`**  
+  Returns a tuple of random coordinates within the grid.
+
+- **`__valid_direction(self, word, coords)`**  
+  Checks if a word can be placed at the given coordinates in any of the 8 possible directions (horizontal, vertical, diagonal). This method also verifies that the word fits within the grid and that it doesn't overlap with existing words incorrectly.
+
+- **`__place_word(self, word, coords, direction)`**  
+  Places the word at the given coordinates in the grid, following the chosen direction.
+
+- **`__fillBlankIn(self)`**  
+  Fills in all the remaining empty spaces in the grid with random letters.
+
+- **`generate_word_search(self)`**  
+  The main method that generates the word search. It iterates through the list of words, places each word randomly on the grid, and then fills in the blank spaces with random letters.
+
+- **Word Length Validation**: During word placement, the code ensures that each word is properly placed without exceeding the grid size or overlapping with other words incorrectly. The grid size is automatically adjusted to accommodate the longest word in the list.
+
+### Example of Grid Generation
+
+Here’s an example of how the `generate_word_search()` method works:
+
+1. **Input**: A list of words, e.g., `["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]`.
+2. **Output**: A grid with those words placed randomly in 8 possible directions, with remaining empty spaces filled with random letters.
+
+Example grid:
+
+```json
+[
+  ["P", "Y", "T", "H", "O", "N", "", "", "", ""],
+  ["", "", "", "", "", "F", "L", "A", "S", "K"],
+  ["", "", "", "", "", "W", "E", "B", "", ""],
+  ["", "", "", "", "", "", "S", "E", "A", "R"],
+  ["", "", "", "", "", "", "", "", "C", "O"],
+  ["", "", "", "", "", "", "", "", "D", "E"],
+  ["", "", "", "", "", "", "", "", "", "C"],
+  ["", "", "", "", "", "", "", "", "", "O"],
+  ["", "", "", "", "", "", "", "", "", "D"],
+  ["", "", "", "", "", "", "", "", "", "E"]
+]
+```
 
 ## API Endpoints
 
@@ -75,21 +131,22 @@ The response will be a JSON object representing the word search grid.
 Example response:
 
 ```json
-[
-  ["P", "Y", "T", "H", "O", "N", "", "", "", ""],
-  ["", "", "", "", "", "F", "L", "A", "S", "K"],
-  ["", "", "", "", "", "W", "E", "B", "", ""],
-  ["", "", "", "", "", "", "S", "E", "A", "R"],
-  ["", "", "", "", "", "", "", "", "C", "O"],
-  ["", "", "", "", "", "", "", "", "D", "E"],
-  ["", "", "", "", "", "", "", "", "", "C"],
-  ["", "", "", "", "", "", "", "", "", "O"],
-  ["", "", "", "", "", "", "", "", "", "D"],
-  ["", "", "", "", "", "", "", "", "", "E"]
-]
+{
+  "search": [
+    ["P", "Y", "T", "H", "O", "N", "", "", "", ""],
+    ["", "", "", "", "", "F", "L", "A", "S", "K"],
+    ["", "", "", "", "", "W", "E", "B", "", ""],
+    ["", "", "", "", "", "", "S", "E", "A", "R"],
+    ["", "", "", "", "", "", "", "", "C", "O"],
+    ["", "", "", "", "", "", "", "", "D", "E"],
+    ["", "", "", "", "", "", "", "", "", "C"],
+    ["", "", "", "", "", "", "", "", "", "O"],
+    ["", "", "", "", "", "", "", "", "", "D"],
+    ["", "", "", "", "", "", "", "", "", "E"]
+  ],
+  "words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
+}
 ```
-
-Each letter in the grid represents a position in the word search, and empty strings (`""`) are places where no word is placed.
 
 #### Error Responses
 
@@ -121,7 +178,7 @@ curl -X POST http://localhost:5000/generate_word_search \
 
 If successful, you'll receive a JSON response with the generated word search grid.
 
-## Example Python Test Script
+### Example Python Test Script
 
 You can also test the API with the following Python script using the `requests` library:
 
@@ -161,11 +218,17 @@ If you're testing the API using Python, you'll need to install the `requests` li
 pip install requests
 ```
 
-## Notes
+## Code Explanation
 
-- The word search generation logic is currently a basic example. It places words horizontally, and it doesn't account for word overlap or filling empty spaces with random letters.
-- You can modify the `generate_word_search` function in `app.py` to implement more complex word placement algorithms.
-- The API does not currently validate the size of the word search grid. If you send too many long words, the grid might overflow. You can implement constraints for grid size and word length as needed.
+### `app.py`
+
+The Flask API is defined in `app.py`. The key parts of the code are:
+
+- **CORS**: This is enabled to allow cross-origin requests, which is particularly useful if you're hosting the API and front-end on different domains.
+  
+- **POST `/generate_word_search`**: The main endpoint where users can send a list of words. If no words are provided, a default list of random words will be used. The `WordSearch` class is used to generate the word search grid.
+
+- **Error Handling**: If an invalid request is sent (e.g., missing words), the server responds with a default list of words and generates the grid.
 
 ## License
 
