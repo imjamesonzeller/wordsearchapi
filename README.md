@@ -4,9 +4,9 @@ This project provides a simple API to generate word search grids based on a list
 
 ## Features
 
-- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations.
+- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations along with words that were inserted.
 - **POST Method**: Accepts `POST` requests containing a JSON object with a list of words.
-- **JSON Response**: Returns a JSON object representing the generated word search grid.
+- **JSON Response**: Returns a JSON object representing the generated word search grid and the list of words inside the word search itself.
 
 ## Requirements
 
