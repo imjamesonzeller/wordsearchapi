@@ -1,6 +1,6 @@
 # Word Search API
 
-This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid.
+This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid and the list of words inside the word search itself.
 
 ## Features
 
