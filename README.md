@@ -202,6 +202,8 @@ else:
     print(response.text)
 ```
 
+The test.py file also works well with better formating for CLI word searches.
+
 ### Dependencies for Testing
 
 If you're testing the API using Python, you'll need to install the `requests` library:
@@ -218,7 +220,7 @@ The Flask API is defined in `app.py`. The key parts of the code are:
 
 - **CORS**: This is enabled to allow cross-origin requests, which is particularly useful if you're hosting the API and front-end on different domains.
   
-- **POST `/generate_word_search`**: The main endpoint where users can send a list of words. If no words are provided, a default list of random words will be used. The `WordSearch` class is used to generate the word search grid.
+- **POST `/generate_word_search`**: The main endpoint where users can send a list of words. If no words are provided, a default list of random words from words.py will be used. The `WordSearch` class is used to generate the word search grid.
 
 - **Error Handling**: If an invalid request is sent (e.g., missing words), the server responds with a default list of words and generates the grid.
 
