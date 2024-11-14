@@ -1,12 +1,12 @@
 # Word Search API
 
-This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid.
+This project provides a simple API to generate word search grids based on a list of words. It uses Flask as the web framework and allows users to send a list of words via a POST request to generate a word search grid. The API returns a JSON object representing the grid and the words that are contained.
 
 ## Features
 
-- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations.
+- **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations along with words that are contained.
 - **POST Method**: Accepts `POST` requests containing a JSON object with a list of words.
-- **JSON Response**: Returns a JSON object representing the generated word search grid.
+- **JSON Response**: Returns a JSON object representing the generated word search grid along with the words that are contained.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ This project provides a simple API to generate word search grids based on a list
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/word-search-api.git
+git clone https://github.com/imjamesonzeller/wordsearchapi.git
 cd word-search-api
 ```
 
@@ -86,19 +86,19 @@ Here’s an example of how the `generate_word_search()` method works:
 1. **Input**: A list of words, e.g., `["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]`.
 2. **Output**: A grid with those words placed randomly in 8 possible directions, with remaining empty spaces filled with random letters.
 
-Example grid:
+Example grid before random letter insertion:
 
 ```json
 [
   ["P", "Y", "T", "H", "O", "N", "", "", "", ""],
-  ["", "", "", "", "", "F", "L", "A", "S", "K"],
-  ["", "", "", "", "", "W", "E", "B", "", ""],
-  ["", "", "", "", "", "", "S", "E", "A", "R"],
-  ["", "", "", "", "", "", "", "", "C", "O"],
-  ["", "", "", "", "", "", "", "", "D", "E"],
-  ["", "", "", "", "", "", "", "", "", "C"],
-  ["", "", "", "", "", "", "", "", "", "O"],
-  ["", "", "", "", "", "", "", "", "", "D"],
+  ["", "", "", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "B", "E", "W", "", ""],
+  ["", "F", "", "", "", "S", "", "", "", ""],
+  ["", "", "L", "", "E", "", "", "", "", ""],
+  ["", "", "", "A", "", "", "", "", "", ""],
+  ["", "", "R", "", "S", "", "", "", "", "C"],
+  ["", "C", "", "", "", "K", "", "", "", "O"],
+  ["H", "", "", "", "", "", "", "", "", "D"],
   ["", "", "", "", "", "", "", "", "", "E"]
 ]
 ```
@@ -134,14 +134,14 @@ Example response:
 {
   "search": [
     ["P", "Y", "T", "H", "O", "N", "", "", "", ""],
-    ["", "", "", "", "", "F", "L", "A", "S", "K"],
-    ["", "", "", "", "", "W", "E", "B", "", ""],
-    ["", "", "", "", "", "", "S", "E", "A", "R"],
-    ["", "", "", "", "", "", "", "", "C", "O"],
-    ["", "", "", "", "", "", "", "", "D", "E"],
-    ["", "", "", "", "", "", "", "", "", "C"],
-    ["", "", "", "", "", "", "", "", "", "O"],
-    ["", "", "", "", "", "", "", "", "", "D"],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "B", "E", "W", "", ""],
+    ["", "F", "", "", "", "S", "", "", "", ""],
+    ["", "", "L", "", "E", "", "", "", "", ""],
+    ["", "", "", "A", "", "", "", "", "", ""],
+    ["", "", "R", "", "S", "", "", "", "", "C"],
+    ["", "C", "", "", "", "K", "", "", "", "O"],
+    ["H", "", "", "", "", "", "", "", "", "D"],
     ["", "", "", "", "", "", "", "", "", "E"]
   ],
   "words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
@@ -150,15 +150,7 @@ Example response:
 
 #### Error Responses
 
-- **400 Bad Request**: If no words are provided or if the request body is malformed, the API will return an error message.
-
-Example:
-
-```json
-{
-  "error": "No words provided"
-}
-```
+- **400 Bad Request**: If an invalid request is sent (e.g., missing words), the server responds with a default list of  15 randomly selected words and generates the grid.
 
 - **404 Not Found**: If the endpoint is incorrect or unavailable.
   
@@ -176,7 +168,7 @@ curl -X POST http://localhost:5000/generate_word_search \
      -d '{"words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]}'
 ```
 
-If successful, you'll receive a JSON response with the generated word search grid.
+If successful, you'll receive a JSON response with the generated word search grid and contained words.
 
 ### Example Python Test Script
 
