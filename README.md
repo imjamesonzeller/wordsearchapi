@@ -6,6 +6,7 @@ This project provides a simple API to generate word search grids based on a list
 
 - **Word Search Generation**: Send a list of words to the API, and it will return a grid with the words placed in random locations along with words that are contained.
 - **POST Method**: Accepts `POST` requests containing a JSON object with a list of words.
+- **GET Method**: Accepts `GET` requests for a simple, 15 word, word search.
 - **JSON Response**: Returns a JSON object representing the generated word search grid along with the words that are contained.
 
 ## Requirements
@@ -128,7 +129,7 @@ Example request body:
 
 The response will be a JSON object representing the word search grid.
 
-Example response:
+Example response (pre-empty space fill for readability)):
 
 ```json
 {
@@ -148,6 +149,49 @@ Example response:
 }
 ```
 
+### `GET /generate_word_search`
+
+This endpoint returns a 15 word, generated word search grid in a JSON format.
+
+#### Request
+
+- **URL**: `/generate_word_search`
+- **Method**: `GET`
+
+#### Response
+
+The response will be a JSON object representing the word search grid.
+
+Example response (pre-empty space fill for readability):
+
+```json
+{
+  'search': [
+    ['S', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', 'H', 'D', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', 'O', '_', '_', '_', '_', '_', '_', '_', '_', '_', 'S', '_', 'E', '_', '_', 'B', 'A', 'R', 'E'],
+    ['_', '_', 'N', '_', '_', '_', '_', '_', '_', '_', '_', 'I', '_', '_', 'E', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', 'G', '_', '_', '_', 'S', '_', '_', '_', 'L', '_', '_', '_', 'C', '_', '_', 'T', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', 'T', '_', '_', '_', 'L', '_', '_', '_', '_', 'C', 'R', '_', '_'],
+    ['_', 'S', 'I', 'L', 'E', 'N', 'T', 'I', '_', '_', '_', 'E', '_', '_', '_', '_', 'E', 'U', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', 'B', '_', '_', 'D', 'H', '_', '_', '_', 'A', '_', '_', 'S', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', 'B', '_', '_', '_', 'E', '_', '_', 'T', '_', '_', '_', '_', '_'],
+    ['_', '_', 'R', 'L', '_', '_', '_', 'A', '_', '_', '_', '_', 'B', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', 'E', '_', 'U', '_', '_', 'R', '_', '_', '_', '_', '_', 'R', '_', '_', '_', '_', '_', '_'],
+    ['K', '_', 'H', '_', '_', 'S', '_', '_', 'E', '_', '_', '_', '_', '_', 'U', '_', '_', 'T', '_', '_'],
+    ['E', '_', 'T', '_', '_', '_', 'H', '_', '_', 'D', '_', '_', '_', '_', '_', 'T', 'R', '_', '_', '_'],
+    ['E', '_', 'A', '_', '_', '_', '_', '_', '_', '_', 'I', '_', '_', '_', '_', 'O', 'S', '_', '_', '_'],
+    ['N', '_', 'E', '_', '_', '_', '_', '_', '_', '_', '_', 'S', '_', 'G', 'P', '_', '_', 'I', '_', '_'],
+    ['_', '_', 'W', 'E', '_', '_', '_', '_', '_', '_', '_', '_', 'N', 'S', 'U', '_', '_', '_', 'D', '_'],
+    ['_', '_', '_', '_', 'C', '_', '_', '_', '_', '_', '_', '_', 'N', 'O', '_', 'A', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', 'R', '_', '_', '_', '_', '_', 'A', '_', '_', 'C', '_', 'R', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', 'E', '_', '_', '_', 'R', '_', '_', '_', '_', '_', '_', 'D', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', 'I', '_', 'T', '_', '_', '_', '_', '_', '_', '_', '_', 'E', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', 'F', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', 'D']
+  ],
+  'words': ['fierce', 'lush', 'consider', 'disturbed', 'weather', 'succeed', 'bare', 'transport', 'keen', 'hellish', 'guarded', 'silent', 'treat', 'song', 'rabbits']
+}
+```
+
 #### Error Responses
 
 - **400 Bad Request**: If an invalid request is sent (e.g., missing words), the server responds with a default list of  15 randomly selected words and generates the grid.
@@ -160,13 +204,20 @@ Example response:
 
 You can test the API using a tool like **Postman** or **cURL**. Here's how to do it with **cURL**:
 
-### Example cURL Request:
+### Example cURL Request for POST:
 
 ```bash
 curl -X POST http://localhost:5000/generate_word_search \
      -H "Content-Type: application/json" \
      -d '{"words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]}'
 ```
+or use the public endpoint:
+```bash
+curl -X POST https://wordsearch.jamesonzeller.com/generate_word_search \
+     -H "Content-Type: application/json" \
+     -d '{"words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]}'
+```
+As mentioned, GET requests also work.
 
 If successful, you'll receive a JSON response with the generated word search grid and contained words.
 
@@ -180,6 +231,8 @@ import json
 
 # URL of your Flask API endpoint
 url = 'http://localhost:5000/generate_word_search'
+# OR
+url = 'https://wordsearch.jamesonzeller.com/generate_word_search'
 
 # Example list of words
 words = ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
@@ -202,6 +255,7 @@ else:
     print(response.text)
 ```
 
+As mentioned, GET requests also work.
 The test.py file also works well with better formating for CLI word searches.
 
 ### Dependencies for Testing
@@ -221,6 +275,8 @@ The Flask API is defined in `app.py`. The key parts of the code are:
 - **CORS**: This is enabled to allow cross-origin requests, which is particularly useful if you're hosting the API and front-end on different domains.
   
 - **POST `/generate_word_search`**: The main endpoint where users can send a list of words. If no words are provided, a default list of random words from words.py will be used. The `WordSearch` class is used to generate the word search grid.
+
+- **GET `/generate_word_search`**: The alternative main endpoint where users can request a word search where random words from words.py will be used. The `WordSearch` class is used to generate the word search grid.
 
 - **Error Handling**: If an invalid request is sent (e.g., missing words), the server responds with a default list of words and generates the grid.
 
