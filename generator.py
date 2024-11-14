@@ -2,37 +2,6 @@ import math
 import random
 import string
 
-# from openpyxl import Workbook
-# import openpyxl
-# wb = Workbook()
-# ws = wb.active
-# ws.delete_rows(1, 20)
-# def save():
-#     for row in grid: ws.append(row)
-#     for column_cells in ws.columns:
-#         current_cell = ws.column_dimensions[openpyxl.utils.get_column_letter(column_cells[0].column)]
-#         current_cell.width = 4.8
-#         for cell in column_cells:
-#             from copy import copy
-#             alignment_obj = copy(cell.alignment)
-#             alignment_obj.horizontal = 'center'
-#             alignment_obj.vertical = 'center'
-#             cell.alignment = alignment_obj
-#     for row in range(1, ws.max_row + 1):
-#         ws.row_dimensions[row].height = 25
-#     ws['V1'].value = "Words are:"
-#     ws['W1'].value = "x"
-#     for row in ws.iter_rows():
-#         if len(words_copy) != 0:
-#             row[22].value = words_copy[-1]
-#             words_copy.pop(-1)
-#     ws.column_dimensions['V'].width = 20
-#     ws.column_dimensions['W'].width = 20
-#     wb.save("wordsearch.xlsx")
-# yn_save = input("Would you like to save this to an XLSX file to print (y / n)? ")
-# if yn_save == "y":
-#     save()
-
 class WordSearch():
     def __init__(self, words):
         self.words = words
