@@ -224,6 +224,45 @@ The Flask API is defined in `app.py`. The key parts of the code are:
 
 - **Error Handling**: If an invalid request is sent (e.g., missing words), the server responds with a default list of words and generates the grid.
 
+## Self-Hosting & Deployment
+
+This Word Search API is self-hosted on my home server using Docker. The API is publicly accessible at the following URL:
+
+- **API Endpoint**: [https://wordsearch.jamesonzeller.com/generate_word_search](https://wordsearch.jamesonzeller.com/generate_word_search)
+
+### Hosting with Docker
+
+To make the API publicly available, I’ve containerized the application using Docker. 
+## Website Integration
+
+To make the word search functionality easily accessible from my website, I’ve integrated the API into my site. Users can generate word search grids directly through the following URL:
+
+- **Word Search on Website**: [https://www.jamesonzeller.com/wordsearch](https://www.jamesonzeller.com/wordsearch)
+
+On this page, I created a user-friendly interface where visitors can input their own words, and the backend API will generate a custom word search grid. The integration uses JavaScript to send a POST request to the API, retrieve the word search grid, and display it dynamically on the page.
+
+### Example Website Flow
+
+1. **User Input**: The user enters a list of words they’d like to see in the word search along with a delimiter that seperates their words.
+2. **API Request**: The JavaScript frontend sends a POST request to the API (`https://wordsearch.jamesonzeller.com/generate_word_search`) with the words provided by the user.
+3. **Grid Generation**: The API processes the request, generates the word search grid, and returns the result as a JSON response.
+4. **Display**: The website displays the generated grid in an interactive format, where the user can see the words arranged in the grid.
+5. **Download**: The JavaScript frontend processes the JSON response and creates a CSV file and displays the download link to provide easy printing.
+
+### Technologies Used
+
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Python (Flask)
+- **Containerization**: Docker
+- **Hosting**: Home server with Cloudflare Tunnel
+- **CORS**: Enabled for cross-origin requests from the website to the API
+
+## Conclusion
+
+The Word Search API is a fun and simple tool to generate word search grids. By self-hosting it on my home server and integrating it into my website, I’ve made it accessible to anyone who wants to create their own word search puzzles. This project demonstrates my ability to work with both backend and frontend technologies, as well as my familiarity with Docker and cloud-based hosting.
+
+Feel free to try it out on the website or directly interact with the API at the provided endpoints!
+
 ## License
 
 This project is open source and available under the MIT License.
