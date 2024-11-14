@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from words import words as words_list
 from generator import WordSearch
 import random
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def generate_word_search(words) -> tuple:
     grid = WordSearch(words)

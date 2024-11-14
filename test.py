@@ -1,12 +1,12 @@
 import requests
 
-url = 'http://127.0.0.1:5000/generate_word_search'
+url = 'http://wordsearch.jamesonzeller.com/generate_word_search'
 
 words = ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
 
-data = {}
+data = { 'words': words }
 
-response = requests.post(url)
+response = requests.post(url, json=data)
 
 if response.status_code == 200:
     print("Word search generated successfully!")
