@@ -224,7 +224,7 @@ The Flask API is defined in `app.py`. The key parts of the code are:
 
 - **Error Handling**: If an invalid request is sent (e.g., missing words), the server responds with a default list of words and generates the grid.
 
-## Self-Hosting & Deployment
+# Self-Hosting & Deployment
 
 This Word Search API is self-hosted on my home server using Docker. The API is publicly accessible at the following URL:
 
