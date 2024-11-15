@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://wordsearch.jamesonzeller.com/generate_word_search'
+url = 'http://api.jamesonzeller.com/generate_word_search'
 
 words = ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
 

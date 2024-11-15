@@ -213,7 +213,7 @@ curl -X POST http://localhost:5000/generate_word_search \
 ```
 or use the public endpoint:
 ```bash
-curl -X POST https://wordsearch.jamesonzeller.com/generate_word_search \
+curl -X POST https://api.jamesonzeller.com/generate_word_search \
      -H "Content-Type: application/json" \
      -d '{"words": ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]}'
 ```
@@ -232,7 +232,7 @@ import json
 # URL of your Flask API endpoint
 url = 'http://localhost:5000/generate_word_search'
 # OR
-url = 'https://wordsearch.jamesonzeller.com/generate_word_search'
+url = 'https://api.jamesonzeller.com/generate_word_search'
 
 # Example list of words
 words = ["PYTHON", "FLASK", "WEB", "SEARCH", "CODE"]
@@ -284,7 +284,7 @@ The Flask API is defined in `app.py`. The key parts of the code are:
 
 This Word Search API is self-hosted on my home server using Docker. The API is publicly accessible at the following URL:
 
-- **API Endpoint**: [https://wordsearch.jamesonzeller.com/generate_word_search](https://wordsearch.jamesonzeller.com/generate_word_search)
+- **API Endpoint**: [https://api.jamesonzeller.com/generate_word_search](https://api.jamesonzeller.com/generate_word_search)
 
 ### Hosting with Docker
 
@@ -300,7 +300,7 @@ On this page, I created a user-friendly interface where visitors can input their
 ### Example Website Flow
 
 1. **User Input**: The user enters a list of words they’d like to see in the word search along with a delimiter that seperates their words.
-2. **API Request**: The JavaScript frontend sends a POST request to the API (`https://wordsearch.jamesonzeller.com/generate_word_search`) with the words provided by the user.
+2. **API Request**: The JavaScript frontend sends a POST request to the API (`https://api.jamesonzeller.com/generate_word_search`) with the words provided by the user.
 3. **Grid Generation**: The API processes the request, generates the word search grid, and returns the result as a JSON response.
 4. **Display**: The website displays the generated grid in an interactive format, where the user can see the words arranged in the grid.
 5. **Download**: The JavaScript frontend processes the JSON response and creates a CSV file and displays the download link to provide easy printing.
